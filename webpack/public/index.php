@@ -23,13 +23,39 @@ include('../view/header.php'); ?>
                         </radialGradient>
                     </defs>
                 </svg>
-                <h1>Bienvenue!</h1>
-                <p>Votre feuille de pointage en ligne!</p>
+                <?php if (!empty($_SESSION['user']['nom']) || !empty($_SESSION['user']['prenom']) || !empty($_SESSION['user']['mail']) || !empty($_SESSION['user']['id'])) : ?>
+
+                    <h1>Bonjour <?php echo $_SESSION['user']['prenom'] . "!" ?></h1>
+                    <h1><?php
+                        $jour = getdate();
+                        $semaine = array(
+                            " Dimanche ", " Lundi ", " Mardi ", " Mercredi ", " Jeudi ",
+                            " Vendredi ", " Samedi "
+                        );
+                        $mois = array(
+                            1 => " Janvier ", " Février ", " Mars ", " Avril ", " Mai ", " Juin ",
+                            " Juillet ", " Août ", " Septembre ", " Octobre ", " Novembre ", " Décembre "
+                        );
+
+                        echo
+                        $semaine[date('w')], " ", date('j'), "", $mois[date('n')], date('Y'); ?></h1>
+
+                <?php else : ?>
+                    <h1>Bienvenue!</h1>
+                    <p>Votre feuille de pointage en ligne!</p>
+                <?php endif; ?>
             </div>
             <div class="btn-group">
-                <a class="button button_white" href="log.php">COMMENCER?</a>
+            <?php if (!empty($_SESSION['user']['nom']) || !empty($_SESSION['user']['prenom']) || !empty($_SESSION['user']['mail']) || !empty($_SESSION['user']['id'])) : ?>
+
+                   <a class="button button_white" href="choose.php">COMMENCER?</a>
+                <?php else : ?>
+                    <a class="button button_white" href="log.php">COMMENCER?</a>
+                <?php endif; ?>
+
             </div>
             <?php include('../view/nav.php'); ?>
+        </div>
     </section>
 </section>
 
